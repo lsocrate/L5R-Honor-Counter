@@ -1,0 +1,10 @@
+# humanstxt.org/
+
+# TEAM
+
+    Luiz Sócrate -- Developer -- @lsocrate
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+    Normalize.css, jQuery
