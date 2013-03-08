@@ -1,12 +1,12 @@
 {
-	"folders":[
-		{
+  "folders":[
+    {
       "name": "L5R Honor Counter",
-			"path": "/",
+      "path": "/",
       "folder_exclude_patterns": ["node_modules"],
       "file_exclude_patterns": ["*.sublime-workspace"]
-		}
-	],
+    }
+  ],
   "settings": {
     "translate_tabs_to_spaces": true,
     "trim_trailing_white_space_on_save": true,
