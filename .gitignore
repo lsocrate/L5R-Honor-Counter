@@ -3,3 +3,4 @@ node_modules
 builds
 css
 .sass-cache
+*.sublime-workspace

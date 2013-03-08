@@ -1,0 +1,17 @@
+{
+	"folders":[
+		{
+      "name": "L5R Honor Counter",
+			"path": "/",
+      "folder_exclude_patterns": ["node_modules"],
+      "file_exclude_patterns": ["*.sublime-workspace"]
+		}
+	],
+  "build_systems":[
+    {
+      "name": "Grunt",
+      "shell_cmd": "grunt go:prod",
+      "working_dir": "$project_path"
+    }
+  ]
+}
