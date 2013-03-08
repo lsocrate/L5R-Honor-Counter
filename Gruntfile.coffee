@@ -1,7 +1,4 @@
 module.exports = (grunt) ->
-  # ENVIRONMENT
-  __ENV__ = null
-
   # Config
   grunt.initConfig(
     pkg: grunt.file.readJSON('package.json')
@@ -19,9 +16,14 @@ module.exports = (grunt) ->
           {expand: true, cwd: '/tmp/grunt/<%= pkg.name %>/js/', src: '*', dest: 'js/', filter: 'isFile'}
         ]
     watch:
-      scripts:
+      js:
         files: 'src/*.coffee'
         tasks: ['clean', 'coffee', 'copy']
+        options:
+          interrupt: true
+      css:
+        files: 'sass/*'
+        tasks: ['sass:css', 'concat:css']
         options:
           interrupt: true
     clean: ["js"]
@@ -32,6 +34,26 @@ module.exports = (grunt) ->
         files: [
           {src:['*.html', '*.txt', 'css/**', 'js/**', 'libs/**']}
         ]
+    sass:
+      css:
+        options:
+          style: 'compressed'
+          compass: true
+        files:
+          '/tmp/grunt/<%= pkg.name %>/css/main.css': 'sass/style.sass'
+          '/tmp/grunt/<%= pkg.name %>/css/basis.css': [
+            'sass/normalize.scss'
+            'sass/main.scss'
+          ]
+    concat:
+      css:
+        options:
+          separator: ';'
+        src: [
+          '/tmp/grunt/<%= pkg.name %>/css/basis.css'
+          '/tmp/grunt/<%= pkg.name %>/css/main.css'
+        ]
+        dest: 'css/styles.css'
 
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
@@ -39,14 +61,15 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-clean')
     grunt.loadNpmTasks('grunt-contrib-compress')
+    grunt.loadNpmTasks('grunt-contrib-sass')
+    grunt.loadNpmTasks('grunt-contrib-concat')
 
     grunt.registerTask('go', 'Switch environments', (env) ->
-      __ENV__ = env
-      grunt.task.run(['clean', 'coffee'])
-      if __ENV__ is 'dev'
+      grunt.task.run(['clean', 'coffee', 'sass', 'concat'])
+      if env is 'dev'
         grunt.task.run('copy')
         grunt.task.run('watch')
-      else if __ENV__ is 'prod'
+      else if env is 'prod'
         grunt.task.run('uglify')
     )
 
