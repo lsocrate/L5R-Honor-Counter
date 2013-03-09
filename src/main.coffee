@@ -28,7 +28,7 @@ class Player
 
   dispatchTap: (ev) ->
     ev.preventDefault()
-    action = ev.toElement.className
+    action = ev.target.className
     if action is "more"
       @changeHonor(1)
     else

@@ -4,3 +4,4 @@ builds
 css
 .sass-cache
 *.sublime-workspace
+manifest.appcache
