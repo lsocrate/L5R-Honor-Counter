@@ -64,16 +64,13 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-sass')
     grunt.loadNpmTasks('grunt-contrib-concat')
 
-    grunt.registerTask('go', 'Switch environments', (env) ->
-      grunt.task.run(['clean', 'coffee', 'sass', 'concat'])
-      if env is 'dev'
-        grunt.task.run('copy')
-        grunt.task.run('watch')
-      else if env is 'prod'
-        grunt.task.run('uglify')
+    grunt.registerTask('dev', 'Development environment', ->
+      grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'copy', 'watch'])
     )
-
+    grunt.registerTask('prod', 'Production environment', ->
+      grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'uglify'])
+    )
     grunt.registerTask('package', 'Make deployment package', ->
-      grunt.task.run(['go:prod', 'compress:package'])
+      grunt.task.run(['prod', 'compress:package'])
     )
   )
