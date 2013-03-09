@@ -1,0 +1,48 @@
+body
+  height: 100%
+  overflow: hidden
+  position: relative
+
+h1
+  display: none
+
+.player
+  height: 50%
+  width: 100%
+  position: absolute
+
+  &.p1
+    top: 0
+  &.p2
+    bottom: 0
+
+  .honor
+    position: absolute
+    width: 50%
+    height: 40px
+    right: 0
+    top: 50%
+    margin-top: -20px
+    text-align: center
+    line-height: 40px
+    font:
+      size: 40px
+
+  .controls
+    position: absolute
+    bottom: 0
+    background: #000
+    height: 40px
+    width: 100%
+    color: #fff
+    line-height: 40px
+    font:
+      size: 40px
+
+    .more, .less
+      width: 50%
+      text-align: center
+    .more
+      float: left
+    .less
+      float: right
