@@ -9,7 +9,7 @@ module.exports = (grunt) ->
     uglify:
       js:
         src: '/tmp/grunt/<%= pkg.name %>/js/main.js'
-        dest: 'js/main.min.js'
+        dest: 'js/main.js'
     copy:
       main:
         files: [
@@ -54,6 +54,18 @@ module.exports = (grunt) ->
           '/tmp/grunt/<%= pkg.name %>/css/main.css'
         ]
         dest: 'css/styles.css'
+    manifest:
+      generate:
+        options:
+          basePath: './'
+          timestamp: true
+        src: [
+          '*.html'
+          'libs/*.js'
+          'js/*.js'
+          'css/*.css'
+        ]
+        dest: 'manifest.appcache'
 
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
@@ -63,12 +75,13 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-compress')
     grunt.loadNpmTasks('grunt-contrib-sass')
     grunt.loadNpmTasks('grunt-contrib-concat')
+    grunt.loadNpmTasks('grunt-manifest')
 
     grunt.registerTask('dev', 'Development environment', ->
       grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'copy', 'watch'])
     )
     grunt.registerTask('prod', 'Production environment', ->
-      grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'uglify'])
+      grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'uglify', 'manifest'])
     )
     grunt.registerTask('package', 'Make deployment package', ->
       grunt.task.run(['prod', 'compress:package'])
