@@ -1,4 +1,7 @@
 class Player
+  honorRequiredForVictory = 40
+  dishonorRequiredForLoss = -20
+
   playHonorSound = ->
     honorSound = new Audio()
     honorSound.src = "../sounds/tap.mp3"
@@ -50,14 +53,15 @@ class Player
 
   updateHonorDisplay: ->
     @honorContainer.html( => @honor)
-    if @honor >= 40
+    if @honor >= honorRequiredForVictory
       @honorContainer.addClass('honor-victory')
     else
       @honorContainer.removeClass('honor-victory')
-    if @honor <= -20
+    if @honor <= dishonorRequiredForLoss
       @honorContainer.addClass('dishonored')
 
 class HonorCounter
+
   constructor: ($, @counter) ->
     @players = []
     for player in @counter.find('.player')
