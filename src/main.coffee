@@ -78,17 +78,17 @@ class HonorCounter
 
   dispatchTap: (ev) ->
     ev.preventDefault()
-    action = ev.target.className
-    switch action
+    switch ev.target.dataset.action
       when 'reset'
         @resetMatch()
-      when 'clans'
-        alert('clans!')
+      when 'setClans'
+        @setClans()
 
   resetMatch: ->
     for player in @players
       player.setHonor(0)
 
+  setClans: ->
 
 (($) ->
   new HonorCounter($, $('body'))
