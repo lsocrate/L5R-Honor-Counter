@@ -11,6 +11,9 @@ class Player
     @more = @player.find(".more")
     @less = @player.find(".less")
 
+    @honorSound = new Audio()
+    @honorSound.src = "../sounds/tap.mp3"
+
     @setEvents()
     @updateHonorDisplay()
 
@@ -31,6 +34,11 @@ class Player
       @changeHonor(1)
     else
       @changeHonor(-1)
+    if action is 'more' or action is 'a'
+      @playHonorSound()
+
+  playHonorSound: ->
+    @honorSound.play()
 
   changeHonor: (change) ->
     @honor += change

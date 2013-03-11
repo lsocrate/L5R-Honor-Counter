@@ -9,3 +9,6 @@
     HTML5, CSS3
     Normalize.css, Zepto.js
     Gruntjs, CoffeeScript
+
+# SOUND EFFECTS BY
+    http://www.pacdv.com/sounds/index.html

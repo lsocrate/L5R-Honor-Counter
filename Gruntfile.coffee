@@ -31,7 +31,7 @@ module.exports = (grunt) ->
         tasks: ['manifest:dev']
         options:
           interrupt: true
-    clean: ["js"]
+    clean: ["js/*"]
     compress:
       package:
         options:
