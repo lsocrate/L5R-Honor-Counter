@@ -39,6 +39,7 @@ class Player
   setHonor: (value) ->
     @honor = parseInt(value, 10)
     @updateHonorDisplay()
+    @honorContainer.removeClass('honor-victory dishonored')
 
   updateHonorDisplay: ->
     @honorContainer.html( => @honor)
