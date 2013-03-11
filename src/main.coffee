@@ -32,14 +32,12 @@ class Player
 
   dispatchTap: (ev) ->
     ev.preventDefault()
-    action = ev.target.className
 
-    if action is "more"
-      @changeHonor(1)
-    else
-      @changeHonor(-1)
-    if action is 'more' or action is 'less'
-      playHonorSound()
+    switch ev.target.dataset.action
+      when 'honor'
+        honorChange = parseInt(ev.target.dataset.honorChange, 10)
+        @changeHonor(honorChange)
+        playHonorSound()
 
   changeHonor: (change) ->
     @honor += change
