@@ -33,6 +33,7 @@ class Player
   dispatchTap: (ev) ->
     ev.preventDefault()
     action = ev.target.className
+
     if action is "more"
       @changeHonor(1)
     else
@@ -80,8 +81,11 @@ class HonorCounter
   dispatchTap: (ev) ->
     ev.preventDefault()
     action = ev.target.className
-    if action is "reset"
-      @resetMatch()
+    switch action
+      when 'reset'
+        @resetMatch()
+      when 'clans'
+        alert('clans!')
 
   resetMatch: ->
     for player in @players
