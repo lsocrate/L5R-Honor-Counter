@@ -26,6 +26,11 @@ module.exports = (grunt) ->
         tasks: ['sass:dev', 'concat:css']
         options:
           interrupt: true
+      html:
+        files: '*.html'
+        tasks: ['manifest:dev']
+        options:
+          interrupt: true
     clean: ["js"]
     compress:
       package:
