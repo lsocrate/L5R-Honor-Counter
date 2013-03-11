@@ -38,6 +38,14 @@ class Player
 
   updateHonorDisplay: ->
     @honorContainer.html( => @honor)
+    if @honor >= 40
+      @honorContainer.addClass('honor-victory')
+    else
+      @honorContainer.removeClass('honor-victory')
+    if @honor <= -20
+      @honorContainer.addClass('dishonored')
+
+
 
 (($) ->
   $(".player").each( -> new Player($, $(@)))
