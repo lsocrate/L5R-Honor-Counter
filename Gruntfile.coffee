@@ -23,7 +23,7 @@ module.exports = (grunt) ->
           interrupt: true
       css:
         files: 'sass/*'
-        tasks: ['sass:css', 'concat:css']
+        tasks: ['sass:dev', 'concat:css']
         options:
           interrupt: true
     clean: ["js"]
@@ -35,7 +35,17 @@ module.exports = (grunt) ->
           {src:['*.html', '*.txt', 'css/**', 'js/**', 'libs/**']}
         ]
     sass:
-      css:
+      dev:
+        options:
+          style: 'nested'
+          compass: true
+        files:
+          '/tmp/grunt/<%= pkg.name %>/css/main.css': 'sass/style.sass'
+          '/tmp/grunt/<%= pkg.name %>/css/basis.css': [
+            'sass/normalize.scss'
+            'sass/main.scss'
+          ]
+      prod:
         options:
           style: 'compressed'
           compass: true
@@ -55,7 +65,13 @@ module.exports = (grunt) ->
         ]
         dest: 'css/styles.css'
     manifest:
-      generate:
+      dev:
+        options:
+          basePath: './'
+          timestamp: true
+        src: []
+        dest: 'manifest.appcache'
+      prod:
         options:
           basePath: './'
           timestamp: true
@@ -78,10 +94,10 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-manifest')
 
     grunt.registerTask('dev', 'Development environment', ->
-      grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'copy', 'manifest', 'watch'])
+      grunt.task.run(['clean', 'coffee', 'sass:dev', 'concat', 'copy', 'manifest:dev', 'watch'])
     )
     grunt.registerTask('prod', 'Production environment', ->
-      grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'uglify', 'manifest'])
+      grunt.task.run(['clean', 'coffee', 'sass:prod', 'concat', 'uglify', 'manifest:prod'])
     )
     grunt.registerTask('package', 'Make deployment package', ->
       grunt.task.run(['prod', 'compress:package'])
