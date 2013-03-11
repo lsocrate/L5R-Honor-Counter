@@ -1,4 +1,10 @@
 class Player
+  playHonorSound = ->
+    honorSound = new Audio()
+    honorSound.src = "../sounds/tap.mp3"
+    honorSound.play()
+    $(honorSound).on('ended', -> delete @)
+
   constructor: ($, @player) ->
     @honorContainer = @player.find(".honor")
     honor = parseInt(@honorContainer.html(), 10)
@@ -10,9 +16,6 @@ class Player
     @controls = @player.find(".controls")
     @more = @player.find(".more")
     @less = @player.find(".less")
-
-    @honorSound = new Audio()
-    @honorSound.src = "../sounds/tap.mp3"
 
     @setEvents()
     @updateHonorDisplay()
@@ -34,11 +37,8 @@ class Player
       @changeHonor(1)
     else
       @changeHonor(-1)
-    if action is 'more' or action is 'a'
-      @playHonorSound()
-
-  playHonorSound: ->
-    @honorSound.play()
+    if action is 'more' or action is 'less'
+      playHonorSound()
 
   changeHonor: (change) ->
     @honor += change
