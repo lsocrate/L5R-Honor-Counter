@@ -36,6 +36,10 @@ class Player
     @honor += change
     @updateHonorDisplay()
 
+  setHonor: (value) ->
+    @honor = parseInt(value, 10)
+    @updateHonorDisplay()
+
   updateHonorDisplay: ->
     @honorContainer.html( => @honor)
     if @honor >= 40
@@ -45,8 +49,36 @@ class Player
     if @honor <= -20
       @honorContainer.addClass('dishonored')
 
+class HonorCounter
+  constructor: ($, @counter) ->
+    @players = []
+    for player in @counter.find('.player')
+      @players.push(new Player($, $(player)))
+
+    @controls = @counter.find('.global-controls')
+    @setEvents()
+
+  setEvents: ->
+    taped = true
+    @controls.on("touchmove touchcancel touchleave", -> taped = false)
+    @controls.on("touchend click", (ev) =>
+      if taped
+        @dispatchTap(ev)
+      else
+        taped = true
+    )
+
+  dispatchTap: (ev) ->
+    ev.preventDefault()
+    action = ev.target.className
+    if action is "reset"
+      @resetMatch()
+
+  resetMatch: ->
+    for player in @players
+      player.setHonor(0)
 
 
 (($) ->
-  $(".player").each( -> new Player($, $(@)))
+  new HonorCounter($, $('body'))
 )(Zepto)
