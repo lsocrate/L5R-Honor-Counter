@@ -16,9 +16,7 @@ class Player
 
   setEvents: ->
     taped = true
-    @controls.on("touchmove", -> taped = false)
-    @controls.on("touchcancel", -> taped = false)
-    @controls.on("touchleave", -> taped = false)
+    @controls.on("touchmove touchcancel touchleave", -> taped = false)
     @controls.on("touchend click", (ev) =>
       if taped
         @dispatchTap(ev)

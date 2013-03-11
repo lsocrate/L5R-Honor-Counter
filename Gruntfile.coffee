@@ -78,7 +78,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-manifest')
 
     grunt.registerTask('dev', 'Development environment', ->
-      grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'copy', 'watch'])
+      grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'copy', 'manifest', 'watch'])
     )
     grunt.registerTask('prod', 'Production environment', ->
       grunt.task.run(['clean', 'coffee', 'sass', 'concat', 'uglify', 'manifest'])
