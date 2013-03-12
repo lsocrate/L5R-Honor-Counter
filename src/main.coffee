@@ -3,6 +3,8 @@ class Player
   dishonorRequiredForLoss = -20
 
   playHonorSound = ->
+    return
+    # @TODO Make this better!
     honorSound = new Audio()
     honorSound.src = "../sounds/tap.mp3"
     honorSound.play()
