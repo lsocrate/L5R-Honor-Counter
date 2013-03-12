@@ -1,4 +1,13 @@
 class Player
+  honorRequiredForVictory = 40
+  dishonorRequiredForLoss = -20
+
+  playHonorSound = ->
+    honorSound = new Audio()
+    honorSound.src = "../sounds/tap.mp3"
+    honorSound.play()
+    $(honorSound).on('ended', -> delete @)
+
   constructor: ($, @player) ->
     @honorContainer = @player.find(".honor")
     honor = parseInt(@honorContainer.html(), 10)
@@ -26,11 +35,12 @@ class Player
 
   dispatchTap: (ev) ->
     ev.preventDefault()
-    action = ev.target.className
-    if action is "more"
-      @changeHonor(1)
-    else
-      @changeHonor(-1)
+
+    switch ev.target.dataset.action
+      when 'honor'
+        honorChange = parseInt(ev.target.dataset.honorChange, 10)
+        @changeHonor(honorChange)
+        playHonorSound()
 
   changeHonor: (change) ->
     @honor += change
@@ -43,20 +53,35 @@ class Player
 
   updateHonorDisplay: ->
     @honorContainer.html( => @honor)
-    if @honor >= 40
+    if @honor >= honorRequiredForVictory
       @honorContainer.addClass('honor-victory')
     else
       @honorContainer.removeClass('honor-victory')
-    if @honor <= -20
+    if @honor <= dishonorRequiredForLoss
       @honorContainer.addClass('dishonored')
 
 class HonorCounter
+  askPlayerClan: (player, name, callback) ->
+    @clanSelector.addClass('active')
+    @clanSelector.find('span').text('Choose ' + name + ' clan:')
+    @clanSelector.find('select').on("change", (ev) =>
+      clan = ev.target.value
+      return unless clan
+
+      player.player.addClass(ev.target.value)
+      @clanSelector.removeClass('active')
+      @clanSelector.find('select').off("change")
+
+      callback() if typeof callback is 'function'
+    )
+
   constructor: ($, @counter) ->
     @players = []
     for player in @counter.find('.player')
       @players.push(new Player($, $(player)))
 
     @controls = @counter.find('.global-controls')
+    @clanSelector = $('.clan-selector')
     @setEvents()
 
   setEvents: ->
@@ -71,14 +96,19 @@ class HonorCounter
 
   dispatchTap: (ev) ->
     ev.preventDefault()
-    action = ev.target.className
-    if action is "reset"
-      @resetMatch()
+    switch ev.target.dataset.action
+      when 'reset'
+        @resetMatch()
+      when 'setClans'
+        @setClans()
 
   resetMatch: ->
     for player in @players
       player.setHonor(0)
 
+  setClans: ->
+    [opponent, owner] = @players
+    @askPlayerClan(owner, 'your', => @askPlayerClan(opponent, 'opponent'))
 
 (($) ->
   new HonorCounter($, $('body'))

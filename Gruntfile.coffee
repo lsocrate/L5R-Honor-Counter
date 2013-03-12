@@ -18,7 +18,7 @@ module.exports = (grunt) ->
     watch:
       js:
         files: 'src/*.coffee'
-        tasks: ['clean', 'coffee', 'copy']
+        tasks: ['coffee', 'copy']
         options:
           interrupt: true
       css:
@@ -31,7 +31,7 @@ module.exports = (grunt) ->
         tasks: ['manifest:dev']
         options:
           interrupt: true
-    clean: ["js"]
+    clean: ["js/*"]
     compress:
       package:
         options:
@@ -85,8 +85,14 @@ module.exports = (grunt) ->
           'libs/*.js'
           'js/*.js'
           'css/*.css'
+          'sounds/*'
         ]
         dest: 'manifest.appcache'
+    img:
+      assets:
+        src: 'img'
+      icons:
+        src: '*.png'
 
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
@@ -97,6 +103,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-sass')
     grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-manifest')
+    grunt.loadNpmTasks('grunt-img')
 
     grunt.registerTask('dev', 'Development environment', ->
       grunt.task.run(['clean', 'coffee', 'sass:dev', 'concat', 'copy', 'manifest:dev', 'watch'])

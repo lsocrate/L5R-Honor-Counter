@@ -11,25 +11,43 @@
 <body>
   <h1>L5R Honor Counter</h1>
   <section class="player p1">
-    <h1 class="clan"></h1>
     <div class="honor"></div>
     <div class="controls">
-      <div class="more">+</div>
-      <div class="less">-</div>
+      <div class="more" data-action="honor" data-honor-change="+1">+</div>
+      <div class="less" data-action="honor" data-honor-change="-1">-</div>
     </div>
   </section>
   <section class="global-controls">
-    <div class="reset">Reset</div>
-    <div class="clans">Clans</div>
+    <div class="reset" data-action="reset">Reset</div>
+    <div class="clans" data-action="setClans">Clans</div>
   </section>
   <section class="player p2">
-    <h1 class="clan"></h1>
     <div class="honor"></div>
     <div class="controls">
-      <div class="more">+</div>
-      <div class="less">-</div>
+      <div class="more" data-action="honor" data-honor-change="+1">+</div>
+      <div class="less" data-action="honor" data-honor-change="-1">-</div>
     </div>
   </section>
+
+  <div class="clan-selector">
+    <label><span>Choose {{who}} clan:</span>
+      <select class="clan p1">
+        <option value="">--</option>
+        <option value="crab">Crab</option>
+        <option value="crane">Crane</option>
+        <option value="dragon">Dragon</option>
+        <option value="lion">Lion</option>
+        <option value="mantis">Mantis</option>
+        <option value="phoenix">Phoenix</option>
+        <option value="scorpion">Scorpion</option>
+        <option value="spider">Spider</option>
+        <option value="unicorn">Unicorn</option>
+        <option value="shadowlands">Shadowlands</option>
+        <option value="ronin">Ronin</option>
+        <option value="imperial">Imperial</option>
+      </select>
+    </label>
+  </div>
   <script src="libs/zepto.min.js"></script>
   <script src="js/main.js"></script>
   <script type="text/javascript">
