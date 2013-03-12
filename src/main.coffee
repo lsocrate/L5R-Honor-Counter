@@ -127,15 +127,17 @@ class HonorCounter
     [opponent, owner] = @players
     @askPlayerClan(owner, 'your', => @askPlayerClan(opponent, 'opponent'))
 
+confirmedUpdate = false
 checkForUpdates = ->
   cache = window.applicationCache
   cache.addEventListener('updateready', (ev) ->
-    if cache.status is cache.UPDATEREADY
-      cache.swapCache()
-      if confirm('A new version of this app is available. Update now?')
-        window.location.reload()
+    unless confirmedUpdate
+      if cache.status is cache.UPDATEREADY
+        cache.swapCache()
+        confirmedUpdate = true
+        if confirm('A new version of this app is available. Update now?')
+          window.location.reload()
   )
-  cache.update()
 
 (($) ->
   new HonorCounter($, $('body'))
