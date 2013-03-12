@@ -86,6 +86,7 @@ module.exports = (grunt) ->
           'js/*.js'
           'css/*.css'
           'sounds/*'
+          'img/*'
         ]
         dest: 'manifest.appcache'
     img:
