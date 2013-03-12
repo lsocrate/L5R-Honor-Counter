@@ -127,17 +127,6 @@ class HonorCounter
     [opponent, owner] = @players
     @askPlayerClan(owner, 'your', => @askPlayerClan(opponent, 'opponent'))
 
-checkForUpdates = ->
-  cache = window.applicationCache
-  cache.addEventListener('updateready', (ev) ->
-    if cache.status is cache.UPDATEREADY
-      cache.swapCache()
-      if confirm('A new version of this app is available. Update now?')
-        window.location.reload()
-  )
-  cache.update()
-
 (($) ->
   new HonorCounter($, $('body'))
-  checkForUpdates()
 )(Zepto)
