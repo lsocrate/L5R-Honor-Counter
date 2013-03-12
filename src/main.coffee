@@ -61,6 +61,19 @@ class Player
       @honorContainer.addClass('dishonored')
 
 class HonorCounter
+  askPlayerClan: (player, name, callback) ->
+    @clanSelector.addClass('active')
+    @clanSelector.find('span').text('Choose ' + name + ' clan:')
+    @clanSelector.find('select').on("change", (ev) =>
+      clan = ev.target.value
+      return unless clan
+
+      player.player.addClass(ev.target.value)
+      @clanSelector.removeClass('active')
+      @clanSelector.find('select').off("change")
+
+      callback() if typeof callback is 'function'
+    )
 
   constructor: ($, @counter) ->
     @players = []
@@ -68,6 +81,7 @@ class HonorCounter
       @players.push(new Player($, $(player)))
 
     @controls = @counter.find('.global-controls')
+    @clanSelector = $('.clan-selector')
     @setEvents()
 
   setEvents: ->
@@ -93,6 +107,8 @@ class HonorCounter
       player.setHonor(0)
 
   setClans: ->
+    [opponent, owner] = @players
+    @askPlayerClan(owner, 'your', => @askPlayerClan(opponent, 'opponent'))
 
 (($) ->
   new HonorCounter($, $('body'))
