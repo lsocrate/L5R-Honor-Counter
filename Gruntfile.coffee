@@ -91,6 +91,8 @@ module.exports = (grunt) ->
     img:
       assets:
         src: 'img'
+      icons:
+        src: '*.png'
 
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
