@@ -63,6 +63,21 @@ class Player
       @honorContainer.addClass('dishonored')
 
 class HonorCounter
+  clans = [
+    'crab'
+    'crane'
+    'dragon'
+    'lion'
+    'mantis'
+    'phoenix'
+    'scorpion'
+    'spider'
+    'unicorn'
+    'shadowlands'
+    'ronin'
+    'imperial'
+  ]
+
   askPlayerClan: (player, name, callback) ->
     @clanSelector.addClass('active')
     @clanSelector.find('span').text('Choose ' + name + ' clan:')
@@ -70,7 +85,7 @@ class HonorCounter
       clan = ev.target.value
       return unless clan
 
-      player.player.addClass(ev.target.value)
+      player.player.removeClass(clans.join(' ')).addClass(ev.target.value)
       @clanSelector.removeClass('active')
       @clanSelector.find('select').off("change")
 
