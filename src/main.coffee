@@ -42,7 +42,6 @@ class Player
       when 'honor'
         honorChange = parseInt(ev.target.dataset.honorChange, 10)
         @changeHonor(honorChange)
-        playHonorSound()
 
   changeHonor: (change) ->
     @honor += change
