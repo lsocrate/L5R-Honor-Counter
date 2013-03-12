@@ -88,6 +88,9 @@ module.exports = (grunt) ->
           'sounds/*'
         ]
         dest: 'manifest.appcache'
+    img:
+      assets:
+        src: 'img'
 
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
@@ -98,6 +101,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-sass')
     grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-manifest')
+    grunt.loadNpmTasks('grunt-img')
 
     grunt.registerTask('dev', 'Development environment', ->
       grunt.task.run(['clean', 'coffee', 'sass:dev', 'concat', 'copy', 'manifest:dev', 'watch'])
