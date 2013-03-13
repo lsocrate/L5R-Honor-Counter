@@ -1,8 +1,22 @@
 {
   "name": "L5R-Honor-Counter",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "homepage": "http://honorcounter.com",
+  "bugs": {
+    "url": "https://github.com/lsocrate/L5R-Honor-Counter/issues",
+    "email": "luiz@socrate.com.br"
+  },
+  "author": {
+    "name": "Luiz Sócrate",
+    "email": "luiz@socrate.com.br",
+    "url": "http://socrate.com.br"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lsocrate/L5R-Honor-Counter.git"
+  },
   "devDependencies": {
-    "grunt": "~0.4.0",
+    "grunt": "~0.4.1",
     "grunt-contrib-coffee": "~0.5.0",
     "grunt-contrib-uglify": "~0.1.2",
     "grunt-contrib-copy": "~0.4.0",
