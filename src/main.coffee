@@ -2,15 +2,15 @@ class Player
   honorRequiredForVictory = 40
   dishonorRequiredForLoss = -20
 
-  constructor: ($, @player, @cleanPlayer) ->
-    @honorContainer = @cleanPlayer.querySelector('.honor')
+  constructor: (@player) ->
+    @honorContainer = @player.querySelector('.honor')
     honor = parseInt(@honorContainer.innerHTML, 10)
     if isNaN(honor)
       @honor = 0
     else
       @honor = honor
 
-    @controls = @cleanPlayer.querySelector('.controls')
+    @controls = @player.querySelector('.controls')
 
     @setEvents()
     @updateHonorDisplay()
@@ -78,7 +78,7 @@ class HonorCounter
     @players = []
     players = document.querySelectorAll('.player')
     for player in players
-      @players.push(new Player($, $(player), player))
+      @players.push(new Player(player))
 
     @controls = @counter.find('.global-controls')
     @clanSelector = $('.clan-selector')
