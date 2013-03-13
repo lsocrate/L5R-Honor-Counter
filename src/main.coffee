@@ -2,14 +2,14 @@ class Player
   honorRequiredForVictory = 40
   dishonorRequiredForLoss = -20
 
-  constructor: ($, @player) ->
-    @honorContainer = @player.find(".honor")
-    honor = parseInt(@honorContainer.html(), 10)
+  constructor: ($, @player, @cleanPlayer) ->
+    @honorContainer = @cleanPlayer.querySelector('.honor')
+    honor = parseInt(@honorContainer.innerHTML, 10)
     if isNaN(honor)
       @honor = 0
     else
       @honor = honor
-    @clan = @player.find(".clan").html()
+
     @controls = @player.find(".controls")
     @more = @player.find(".more")
     @less = @player.find(".less")
@@ -42,16 +42,17 @@ class Player
   setHonor: (value) ->
     @honor = parseInt(value, 10)
     @updateHonorDisplay()
-    @honorContainer.removeClass('honor-victory dishonored')
+    @honorContainer.classList.remove('honor-victory')
+    @honorContainer.classList.remove('dishonored')
 
   updateHonorDisplay: ->
-    @honorContainer.html( => @honor)
+    @honorContainer.innerHTML = @honor
     if @honor >= honorRequiredForVictory
-      @honorContainer.addClass('honor-victory')
+      @honorContainer.classList.add('honor-victory')
     else
-      @honorContainer.removeClass('honor-victory')
+      @honorContainer.classList.remove('honor-victory')
     if @honor <= dishonorRequiredForLoss
-      @honorContainer.addClass('dishonored')
+      @honorContainer.classList.add('dishonored')
 
 class HonorCounter
   clans = [
@@ -85,8 +86,9 @@ class HonorCounter
 
   constructor: ($, @counter) ->
     @players = []
-    for player in @counter.find('.player')
-      @players.push(new Player($, $(player)))
+    players = document.querySelectorAll('.player')
+    for player in players
+      @players.push(new Player($, $(player), player))
 
     @controls = @counter.find('.global-controls')
     @clanSelector = $('.clan-selector')
