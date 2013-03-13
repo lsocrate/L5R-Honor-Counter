@@ -28,6 +28,7 @@ class HonorCounter
         playerClasses.remove(playerClass) if clans.indexOf(playerClass) isnt -1
 
       playerClasses.add(clan)
+      player.setClan(clan)
 
       _this.clanSelector.querySelector('select').removeEventListener('change', setupClan)
 

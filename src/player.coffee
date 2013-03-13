@@ -3,12 +3,18 @@ class Player
   dishonorRequiredForLoss = -20
 
   constructor: (@player) ->
+    @honorStorage = ['player', @player.dataset.playerId, 'honor'].join('-')
+    @clanStorage = ['player', @player.dataset.playerId, 'clan'].join('-')
+
     @honorContainer = @player.querySelector('.honor')
-    honor = parseInt(@honorContainer.innerHTML, 10)
-    if isNaN(honor)
-      @honor = 0
+    honor = localStorage.getItem(@honorStorage)
+    if honor
+      @honor = parseInt(honor, 10)
     else
-      @honor = honor
+      @honor = 0
+
+    clan = localStorage.getItem(@clanStorage)
+    @player.classList.add(clan) if clan
 
     @controls = @player.querySelector('.controls')
 
@@ -33,10 +39,12 @@ class Player
 
   changeHonor: (change) ->
     @honor += change
+    localStorage.setItem(@honorStorage, @honor)
     @updateHonorDisplay()
 
   setHonor: (value) ->
     @honor = parseInt(value, 10)
+    localStorage.setItem(@honorStorage, @honor)
     @updateHonorDisplay()
     @honorContainer.classList.remove('honor-victory')
     @honorContainer.classList.remove('dishonored')
@@ -49,3 +57,6 @@ class Player
       @honorContainer.classList.remove('honor-victory')
     if @honor <= dishonorRequiredForLoss
       @honorContainer.classList.add('dishonored')
+
+  setClan: (clan) ->
+    localStorage.setItem(@clanStorage, clan)
