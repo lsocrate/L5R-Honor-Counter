@@ -37,7 +37,7 @@ module.exports = (grunt) ->
         options:
           archive: 'builds/<%= pkg.name %>-<%= pkg.version %>.zip'
         files: [
-          {src:['*.html', '*.txt', 'css/**', 'js/**', 'libs/**']}
+          {src:['*.html', '*.txt', 'css/**', 'js/**']}
         ]
     sass:
       dev:
@@ -82,7 +82,6 @@ module.exports = (grunt) ->
           timestamp: true
         src: [
           '*.html'
-          'libs/*.js'
           'js/*.js'
           'css/*.css'
           'img/*'
