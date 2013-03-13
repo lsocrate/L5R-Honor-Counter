@@ -3,3 +3,4 @@ ready = ->
   new HonorCounter()
 
 document.addEventListener('DOMContentLoaded', ready)
+document.body.addEventListener('touchmove', (ev) -> ev.preventDefault())
