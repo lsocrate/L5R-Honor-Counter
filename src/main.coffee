@@ -10,30 +10,20 @@ class Player
     else
       @honor = honor
 
-    @controls = @player.find(".controls")
-    @more = @player.find(".more")
-    @less = @player.find(".less")
+    @controls = @cleanPlayer.querySelector('.controls')
 
     @setEvents()
     @updateHonorDisplay()
 
   setEvents: ->
-    taped = true
-    @controls.on("touchmove touchcancel touchleave", -> taped = false)
-    @controls.on("touchend click", (ev) =>
-      if taped
-        @dispatchTap(ev)
-      else
-        taped = true
+    @controls.addEventListener('click', (ev) =>
+      ev.preventDefault()
+      data = ev.target.dataset
+      switch data.action
+        when 'honor'
+          honorChange = parseInt(data.honorChange, 10)
+          @changeHonor(honorChange)
     )
-
-  dispatchTap: (ev) ->
-    ev.preventDefault()
-
-    switch ev.target.dataset.action
-      when 'honor'
-        honorChange = parseInt(ev.target.dataset.honorChange, 10)
-        @changeHonor(honorChange)
 
   changeHonor: (change) ->
     @honor += change
