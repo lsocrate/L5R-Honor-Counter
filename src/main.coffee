@@ -61,46 +61,47 @@ class HonorCounter
   ]
 
   askPlayerClan: (player, name, callback) ->
-    @clanSelector.addClass('active')
-    @clanSelector.find('span').text('Choose ' + name + ' clan:')
-    @clanSelector.find('select').on("change", (ev) =>
+    @clanSelector.classList.add('active')
+    @clanSelector.querySelector('span').innerHTML = 'Choose ' + name + ' clan:'
+
+    _this = @
+    setupClan = (ev) ->
       clan = ev.target.value
       return unless clan
 
-      player.player.removeClass(clans.join(' ')).addClass(ev.target.value)
-      @clanSelector.removeClass('active')
-      @clanSelector.find('select').off("change")
+      playerClasses = player.player.classList
+      for playerClass in playerClasses
+        playerClasses.remove(playerClass) if clans.indexOf(playerClass) isnt -1
+
+      playerClasses.add(clan)
+
+      _this.clanSelector.querySelector('select').removeEventListener('change', setupClan)
+
+      _this.clanSelector.classList.remove('active')
 
       callback() if typeof callback is 'function'
-    )
 
-  constructor: ($, @counter) ->
+    @clanSelector.querySelector('select').addEventListener('change', setupClan)
+
+  constructor: ->
     @players = []
     players = document.querySelectorAll('.player')
     for player in players
       @players.push(new Player(player))
 
-    @controls = @counter.find('.global-controls')
-    @clanSelector = $('.clan-selector')
+    @controls = document.querySelector('.global-controls')
+    @clanSelector = document.querySelector('.clan-selector')
     @setEvents()
 
   setEvents: ->
-    taped = true
-    @controls.on("touchmove touchcancel touchleave", -> taped = false)
-    @controls.on("touchend click", (ev) =>
-      if taped
-        @dispatchTap(ev)
-      else
-        taped = true
+    @controls.addEventListener('click', (ev) =>
+      ev.preventDefault()
+      switch ev.target.dataset.action
+        when 'reset'
+          @resetMatch()
+        when 'setClans'
+          @setClans()
     )
-
-  dispatchTap: (ev) ->
-    ev.preventDefault()
-    switch ev.target.dataset.action
-      when 'reset'
-        @resetMatch()
-      when 'setClans'
-        @setClans()
 
   resetMatch: ->
     for player in @players
@@ -110,6 +111,5 @@ class HonorCounter
     [opponent, owner] = @players
     @askPlayerClan(owner, 'your', => @askPlayerClan(opponent, 'opponent'))
 
-(($) ->
-  new HonorCounter($, $('body'))
-)(Zepto)
+
+new HonorCounter()
