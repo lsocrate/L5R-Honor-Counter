@@ -112,4 +112,8 @@ class HonorCounter
     @askPlayerClan(owner, 'your', => @askPlayerClan(opponent, 'opponent'))
 
 
-new HonorCounter()
+ready = ->
+  document.removeEventListener('DOMContentLoaded', ready, false)
+  new HonorCounter()
+
+document.addEventListener('DOMContentLoaded', ready)
