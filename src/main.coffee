@@ -2,14 +2,6 @@ class Player
   honorRequiredForVictory = 40
   dishonorRequiredForLoss = -20
 
-  playHonorSound = ->
-    return
-    # @TODO Make this better!
-    honorSound = new Audio()
-    honorSound.src = "../sounds/tap.mp3"
-    honorSound.play()
-    $(honorSound).on('ended', -> delete @)
-
   constructor: ($, @player) ->
     @honorContainer = @player.find(".honor")
     honor = parseInt(@honorContainer.html(), 10)
