@@ -16,7 +16,13 @@ class Player
     @updateHonorDisplay()
 
   setEvents: ->
-    @controls.addEventListener('click', (ev) =>
+    tap = true
+    @controls.addEventListener('touchmove', -> tap = false)
+    @controls.addEventListener('touchcancel', -> tap = false)
+    @controls.addEventListener('touchend', (ev) =>
+      unless tap
+        return tap = true
+
       ev.preventDefault()
       data = ev.target.dataset
       switch data.action
