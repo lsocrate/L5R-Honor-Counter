@@ -3,22 +3,20 @@ module.exports = (grunt) ->
   grunt.initConfig(
     pkg: grunt.file.readJSON('package.json')
     coffee:
-      compile:
+      dev:
         files:
-          '/tmp/grunt/<%= pkg.name %>/js/main.js':'src/main.coffee'
+          'js/main.js':'/tmp/grunt/<%= pkg.name %>/coffee/script.coffee'
+      prod:
+        files:
+          '/tmp/grunt/<%= pkg.name %>/js/main.js':'/tmp/grunt/<%= pkg.name %>/coffee/script.coffee'
     uglify:
-      js:
+      prod:
         src: '/tmp/grunt/<%= pkg.name %>/js/main.js'
         dest: 'js/main.js'
-    copy:
-      main:
-        files: [
-          {expand: true, cwd: '/tmp/grunt/<%= pkg.name %>/js/', src: '*', dest: 'js/', filter: 'isFile'}
-        ]
     watch:
       js:
         files: 'src/*.coffee'
-        tasks: ['coffee', 'copy']
+        tasks: ['concat:coffee', 'coffee:dev']
         options:
           interrupt: true
       css:
@@ -26,12 +24,6 @@ module.exports = (grunt) ->
         tasks: ['sass:dev', 'concat:css']
         options:
           interrupt: true
-      html:
-        files: '*.html'
-        tasks: ['manifest:dev']
-        options:
-          interrupt: true
-    clean: ["js/*"]
     compress:
       package:
         options:
@@ -69,6 +61,15 @@ module.exports = (grunt) ->
           '/tmp/grunt/<%= pkg.name %>/css/main.css'
         ]
         dest: 'css/styles.css'
+      coffee:
+        options:
+          separator: ''
+        src: [
+          'src/player.coffee'
+          'src/honor-counter.coffee'
+          'src/main.coffee'
+        ]
+        dest: '/tmp/grunt/<%= pkg.name %>/coffee/script.coffee'
     manifest:
       dev:
         options:
@@ -95,9 +96,7 @@ module.exports = (grunt) ->
 
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
-    grunt.loadNpmTasks('grunt-contrib-copy')
     grunt.loadNpmTasks('grunt-contrib-watch')
-    grunt.loadNpmTasks('grunt-contrib-clean')
     grunt.loadNpmTasks('grunt-contrib-compress')
     grunt.loadNpmTasks('grunt-contrib-sass')
     grunt.loadNpmTasks('grunt-contrib-concat')
@@ -105,10 +104,24 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-img')
 
     grunt.registerTask('dev', 'Development environment', ->
-      grunt.task.run(['clean', 'coffee', 'sass:dev', 'concat', 'copy', 'manifest:dev', 'watch'])
+      grunt.task.run([
+        'concat:coffee'
+        'coffee:dev'
+        'sass:dev'
+        'concat:css'
+        'manifest:dev'
+        'watch'
+      ])
     )
     grunt.registerTask('prod', 'Production environment', ->
-      grunt.task.run(['clean', 'coffee', 'sass:prod', 'concat', 'uglify', 'manifest:prod'])
+      grunt.task.run([
+        'concat:coffee'
+        'coffee:prod'
+        'uglify:prod'
+        'sass:prod'
+        'concat:css'
+        'manifest:prod'
+      ])
     )
     grunt.registerTask('package', 'Make deployment package', ->
       grunt.task.run(['prod', 'compress:package'])
