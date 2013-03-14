@@ -49,20 +49,25 @@ class HonorCounter
     @setEvents()
 
   setEvents: ->
-    tap = true
-    @controls.addEventListener('touchmove', -> tap = false)
-    @controls.addEventListener('touchcancel', -> tap = false)
-    @controls.addEventListener('touchend', (ev) =>
-      unless tap
-        return tap = true
-
+    _this = @
+    handleControlEvent = (ev) ->
       ev.preventDefault()
       switch ev.target.dataset.action
         when 'reset'
-          @resetMatch()
+          _this.resetMatch()
         when 'setClans'
-          @setClans()
+          _this.setClans()
+
+    tap = true
+    @controls.addEventListener('touchmove', -> tap = false)
+    @controls.addEventListener('touchcancel', -> tap = false)
+    @controls.addEventListener('touchend', (ev) ->
+      if tap
+        handleControlEvent(ev)
+      else
+        tap = true
     )
+    @controls.addEventListener('mouseup', handleControlEvent)
 
   resetMatch: ->
     for player in @players

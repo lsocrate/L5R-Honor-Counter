@@ -22,20 +22,24 @@ class Player
     @updateHonorDisplay()
 
   setEvents: ->
-    tap = true
-    @controls.addEventListener('touchmove', -> tap = false)
-    @controls.addEventListener('touchcancel', -> tap = false)
-    @controls.addEventListener('touchend', (ev) =>
-      unless tap
-        return tap = true
-
+    _this = @
+    handleControlEvent = (ev) ->
       ev.preventDefault()
       data = ev.target.dataset
       switch data.action
         when 'honor'
           honorChange = parseInt(data.honorChange, 10)
-          @changeHonor(honorChange)
+          _this.changeHonor(honorChange)
+
+    tap = true
+    @controls.addEventListener('touchmove', -> tap = false)
+    @controls.addEventListener('touchcancel', -> tap = false)
+    @controls.addEventListener('touchend', (ev) ->
+      if tap
+        handleControlEvent(ev)
+      else tap = true
     )
+    @controls.addEventListener('mouseup', handleControlEvent)
 
   changeHonor: (change) ->
     @honor += change
