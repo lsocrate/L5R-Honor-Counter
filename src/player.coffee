@@ -31,15 +31,17 @@ class Player
           honorChange = parseInt(data.honorChange, 10)
           _this.changeHonor(honorChange)
 
-    tap = true
-    @controls.addEventListener('touchmove', -> tap = false)
-    @controls.addEventListener('touchcancel', -> tap = false)
-    @controls.addEventListener('touchend', (ev) ->
-      if tap
-        handleControlEvent(ev)
-      else tap = true
-    )
-    @controls.addEventListener('mouseup', handleControlEvent)
+    unless typeof Touch is 'object'
+      @controls.addEventListener('mouseup', handleControlEvent)
+    else
+      tap = true
+      @controls.addEventListener('touchmove', -> tap = false)
+      @controls.addEventListener('touchcancel', -> tap = false)
+      @controls.addEventListener('touchend', (ev) ->
+        if tap
+          handleControlEvent(ev)
+        else tap = true
+      )
 
   changeHonor: (change) ->
     @honor += change
