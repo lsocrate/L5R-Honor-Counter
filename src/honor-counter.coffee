@@ -17,6 +17,7 @@ class HonorCounter
   askPlayerClan: (player, name, callback) ->
     @clanSelector.classList.add('active')
     @clanSelector.querySelector('span').innerHTML = 'Choose ' + name + ' clan:'
+    @clanSelector.querySelector('select').value = ''
 
     _this = @
     setupClan = (ev) ->
