@@ -54,16 +54,12 @@ module.exports = (grunt) ->
           ]
     concat:
       css:
-        options:
-          separator: ';'
         src: [
           '/tmp/grunt/<%= pkg.name %>/css/basis.css'
           '/tmp/grunt/<%= pkg.name %>/css/main.css'
         ]
         dest: 'css/styles.css'
       coffee:
-        options:
-          separator: ''
         src: [
           'src/player.coffee'
           'src/honor-counter.coffee'
