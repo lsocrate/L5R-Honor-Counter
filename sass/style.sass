@@ -1,8 +1,19 @@
+//
+// IMPORTS
+//
 @import "compass/css3/transform"
 @import "compass/css3/background-size"
 @import "compass/css3/border-radius"
 @import "compass/css3/box-sizing"
 
+//
+// VARIABLES
+//
+$bar-height: 40px
+
+//
+// STYLES
+//
 @font-face
   font-family: 'bebas_neueregular'
   src: url('../fonts/bebasneue-webfont.woff') format('woff'), url('../fonts/bebasneue-webfont.svg#bebas_neueregular') format('svg')
@@ -17,6 +28,8 @@ h1
 
 .player
   height: 50%
+  height: -webkit-calc(50% - 20px)
+  height: calc(50% - 20px)
   width: 100%
   position: fixed
   background:
@@ -63,21 +76,21 @@ h1
   .honor
     position: absolute
     width: 50%
-    height: 40px
+    height: $bar-height
     right: 0
     top: 50%
     margin-top: -20px
     text-align: center
-    line-height: 40px
+    line-height: $bar-height
     text-shadow: 1px 1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, -1px -1px 1px #000
     color: #fff
     font:
       size: 40px
 
     &.dishonored
-      color: #f00
+      color: #E11
     &.honor-victory
-      color: #00f
+      color: #59F
 
   .controls
     position: fixed
@@ -86,7 +99,7 @@ h1
     height: 40px
     width: 100%
     color: #fff
-    line-height: 40px
+    line-height: $bar-height
     font:
       size: 40px
 
@@ -101,14 +114,14 @@ h1
 .global-controls
   display: block
   position: fixed
-  height: 40px
+  height: $bar-height
   width: 100%
   top: 50%
   margin-top: -20px
   background: #000
   color: #fff
   text-align: center
-  line-height: 40px
+  line-height: $bar-height
   z-index: 1
   font:
     size: 40px
