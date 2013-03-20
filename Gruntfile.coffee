@@ -38,20 +38,15 @@ module.exports = (grunt) ->
           compass: true
         files:
           '/tmp/grunt/<%= pkg.name %>/css/main.css': 'sass/style.sass'
-          '/tmp/grunt/<%= pkg.name %>/css/basis.css': ['sass/main.scss']
       prod:
         options:
           style: 'compressed'
           compass: true
         files:
           '/tmp/grunt/<%= pkg.name %>/css/main.css': 'sass/style.sass'
-          '/tmp/grunt/<%= pkg.name %>/css/basis.css': ['sass/main.scss']
     concat:
       css:
-        src: [
-          '/tmp/grunt/<%= pkg.name %>/css/basis.css'
-          '/tmp/grunt/<%= pkg.name %>/css/main.css'
-        ]
+        src: ['/tmp/grunt/<%= pkg.name %>/css/main.css']
         dest: 'css/styles.css'
       coffee:
         src: [
