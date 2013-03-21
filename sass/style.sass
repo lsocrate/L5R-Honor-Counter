@@ -9,7 +9,7 @@
 //
 // VARIABLES
 //
-$bar-height: 40px
+$bar-height: 44px
 
 //
 // STYLES
@@ -29,8 +29,8 @@ h1
 
 .player
   height: 50%
-  height: -webkit-calc(50% - 20px)
-  height: calc(50% - 20px)
+  height: -webkit-calc(50% - 22px)
+  height: calc(50% - 22px)
   width: 100%
   position: fixed
   background:
@@ -80,13 +80,13 @@ h1
     height: $bar-height
     right: 0
     top: 50%
-    margin-top: -20px
+    margin-top: - $bar-height / 2
     text-align: center
     line-height: $bar-height
     text-shadow: 1px 1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, -1px -1px 1px #000
     color: #fff
     font:
-      size: 40px
+      size: $bar-height
 
     &.dishonored
       color: #E11
@@ -97,12 +97,12 @@ h1
     position: fixed
     bottom: 0
     background: #000
-    height: 40px
+    height: $bar-height
     width: 100%
     color: #fff
     line-height: $bar-height
     font:
-      size: 40px
+      size: $bar-height
 
     .more, .less
       width: 50%
@@ -118,14 +118,14 @@ h1
   height: $bar-height
   width: 100%
   top: 50%
-  margin-top: -20px
+  margin-top: - $bar-height / 2
   background: #000
   color: #fff
   text-align: center
   line-height: $bar-height
   z-index: 1
   font:
-    size: 40px
+    size: $bar-height
 
   .reset, .clans
     width: 50%
@@ -149,9 +149,6 @@ h1
   top: 50%
   margin-top: -50px
   z-index: 2
-  background: #ccc
+  background: rgba(255,255,255,.75)
   @include border-radius(10px)
   padding: 10px
-
-  select
-    display: block
