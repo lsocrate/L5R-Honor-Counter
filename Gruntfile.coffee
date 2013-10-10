@@ -20,8 +20,8 @@ module.exports = (grunt) ->
         options:
           interrupt: true
       css:
-        files: 'sass/*'
-        tasks: ['sass:dev', 'concat:css']
+        files: 'less/*'
+        tasks: ['less:dev']
         options:
           interrupt: true
     compress:
@@ -31,23 +31,17 @@ module.exports = (grunt) ->
         files: [
           {src:['*.html', '*.txt', 'css/**', 'js/**']}
         ]
-    sass:
+    less:
       dev:
-        options:
-          style: 'nested'
-          compass: true
         files:
-          '/tmp/grunt/<%= pkg.name %>/css/main.css': 'sass/style.sass'
+          'css/styles.css': 'less/style.less'
       prod:
         options:
-          style: 'compressed'
-          compass: true
+          compress: true
+          yuicompress: true
         files:
-          '/tmp/grunt/<%= pkg.name %>/css/main.css': 'sass/style.sass'
+          'css/styles.css': 'less/style.less'
     concat:
-      css:
-        src: ['/tmp/grunt/<%= pkg.name %>/css/main.css']
-        dest: 'css/styles.css'
       coffee:
         src: [
           'src/player.coffee'
@@ -84,17 +78,16 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-coffee')
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-compress')
-    grunt.loadNpmTasks('grunt-contrib-sass')
     grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-manifest')
     grunt.loadNpmTasks('grunt-img')
+    grunt.loadNpmTasks('grunt-contrib-less')
 
     grunt.registerTask('dev', 'Development environment', ->
       grunt.task.run([
         'concat:coffee'
         'coffee:dev'
-        'sass:dev'
-        'concat:css'
+        'less:dev'
         'manifest:dev'
         'watch'
       ])
@@ -104,8 +97,7 @@ module.exports = (grunt) ->
         'concat:coffee'
         'coffee:prod'
         'uglify:prod'
-        'sass:prod'
-        'concat:css'
+        'less:prod'
         'manifest:prod'
       ])
     )

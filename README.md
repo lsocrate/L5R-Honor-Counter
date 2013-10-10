@@ -1,8 +1,5 @@
 # Setup
 ## Development prerequisites
-* Ruby
-* Sass
-* Compass
 * optipng
 * jpegtran
 
