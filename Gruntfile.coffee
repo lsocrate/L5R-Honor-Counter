@@ -24,13 +24,6 @@ module.exports = (grunt) ->
         tasks: ['less:dev']
         options:
           interrupt: true
-    compress:
-      package:
-        options:
-          archive: 'builds/<%= pkg.name %>-<%= pkg.version %>.zip'
-        files: [
-          {src:['*.html', '*.txt', 'css/**', 'js/**']}
-        ]
     less:
       dev:
         files:
@@ -77,7 +70,6 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
     grunt.loadNpmTasks('grunt-contrib-watch')
-    grunt.loadNpmTasks('grunt-contrib-compress')
     grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-manifest')
     grunt.loadNpmTasks('grunt-img')
@@ -100,8 +92,5 @@ module.exports = (grunt) ->
         'less:prod'
         'manifest:prod'
       ])
-    )
-    grunt.registerTask('package', 'Make deployment package', ->
-      grunt.task.run(['prod', 'compress:package'])
     )
   )
